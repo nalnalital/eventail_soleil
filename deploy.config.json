@@ -1,0 +1,19 @@
+{
+  "endpoint": "https://dnavatar.org/deploy.php",
+  "_layout": "Local : php ../../_outward/publish.php deploy.config.json [--changed-only]. git_root=. files_root=. (dépôt soleil/).",
+  "git_root": ".",
+  "files_root": ".",
+
+  "files": [
+    { "src": "rayons-crepusculaires.html", "dest": "pages/eventail/rayons-crepusculaires.html" },
+    { "src": "threejs.html",               "dest": "pages/eventail/threejs.html" },
+    { "src": "threejs2.html",              "dest": "pages/eventail/threejs2.html" },
+    { "src": "paysage-de-mer-avec-des-rayons-de-soleil-par-des-nuages-31077398.webp", "dest": "pages/eventail/paysage-de-mer-avec-des-rayons-de-soleil-par-des-nuages-31077398.webp" }
+  ],
+
+  "_never_deploy": [
+    "deploy.config.json",
+    ".git/",
+    ".DS_Store"
+  ]
+}
