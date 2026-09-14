@@ -44,30 +44,14 @@
   .sw input::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
                    background:#fff;transition:.18s}
   .sw input:checked::after{transform:translateX(14px)}
+  .sw input:disabled{cursor:default;opacity:.4}
+  .sw input:disabled+span{opacity:.4}
   .sw em{color:var(--acc2);font-style:normal}
   button{background:rgba(255,255,255,.07);color:var(--txt);border:1px solid var(--stroke);
          border-radius:7px;padding:6px 10px;font:inherit;font-size:12px;cursor:pointer;transition:.15s}
   button:hover{background:rgba(255,255,255,.14)}
   button:disabled{opacity:.35;cursor:default}
-  button.p{background:var(--acc);color:#1a1206;border-color:transparent;font-weight:600}
-  button.p:hover{background:#ffd77e}
   .btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-  .note{font-size:11.5px;color:#a8b0c0;margin:0 0 10px;line-height:1.5}
-  .note b{color:#cfd5e2;font-weight:600}
-  .rul{margin:2px 0 11px}
-  .rul i{height:9px;border-left:1px solid var(--acc);border-right:1px solid var(--acc);
-         border-bottom:1px solid var(--acc);display:block}
-  .rul span{display:block;font-size:10.5px;color:var(--dim);margin-top:4px;line-height:1.45}
-
-  #tour{border-color:rgba(255,200,87,.35);background:rgba(255,200,87,.055)}
-  #tnum{color:var(--acc);font-weight:700;font-size:10.5px;letter-spacing:1.2px}
-  #ttit{font-size:14px;font-weight:650;margin:3px 0 6px;line-height:1.35}
-  #ttxt{font-size:12.8px;color:#cfd5e2}
-  #ttxt b{color:#fff}
-  #ttxt em{color:var(--acc2);font-style:normal}
-  #ttxt .k{color:var(--acc)}
-  #tnav{display:flex;gap:7px;margin-top:11px;align-items:center}
-  #tdot{flex:1;color:var(--dim);font-size:11px;text-align:center}
 
   #inset{position:fixed;right:14px;bottom:14px;width:404px;height:280px;
          border:1px solid rgba(255,255,255,.22);border-radius:10px;overflow:hidden;
@@ -87,7 +71,7 @@
   #hud b{color:var(--acc)}
   .warn{color:#ff9a9a}
   @media (max-width:980px){#panel{width:100%;height:48%;border-right:none;border-bottom:1px solid var(--stroke)}
-    #inset{width:196px;height:136px}#hint,#hud{left:14px}#hud{max-width:60%}}
+    #inset{width:196px;height:136px}#hint,#hud{left:14px}#hud{right:auto;max-width:60%}}
 </style>
 </head>
 <body>
@@ -98,58 +82,40 @@
   <div class="cap">Vue extérieure — <b>la réalité géométrique</b></div>
   <div class="cap2">projection parallèle · quadrillage 2 km · glisser / molette</div>
 </div>
-<div id="hint">Glisser dans le ciel = tourner la tête · molette = focale</div>
+<div id="hint">Glisser dans le ciel = tourner la tête · molette = avancer / reculer</div>
 <div id="hud"></div>
 
 <div id="panel">
   <h1>Rayons crépusculaires</h1>
   <p class="sub">Pourquoi un éventail, si le Soleil est à l'infini ?</p>
 
-  <div class="grp" id="tour">
-    <div id="tnum"></div>
-    <div id="ttit"></div>
-    <div id="ttxt"></div>
-    <div id="tnav">
-      <button id="tprev">‹ Retour</button>
-      <div id="tdot"></div>
-      <button id="tnext" class="p">Suite ›</button>
-    </div>
-  </div>
-
   <div class="grp">
     <h2>Le Soleil</h2>
-    <div class="row"><label>Hauteur du Soleil <span style="opacity:.5">(zénith = 90°)</span></label><output id="oEl"></output></div>
-    <input type="range" id="sEl" min="1" max="90" step="0.5" value="26">
-    <div class="row"><label>Azimut</label><output id="oAz"></output></div>
-    <input type="range" id="sAz" min="-180" max="180" step="1" value="0">
-    <label class="sw"><input type="checkbox" id="cDiv"><span>Soleil <em>proche</em> : rayons vraiment divergents</span></label>
-    <p class="note" style="margin:2px 0 8px">De face, cocher ou décocher ne change
-      <b>rien</b> — et c'est tout le problème (étape 6). La différence n'apparaît que
-      <b>dos au Soleil</b>, et dans la vue extérieure.</p>
-    <div class="row"><label>Distance du Soleil <span style="opacity:.55">(log)</span></label><output id="oDist"></output></div>
-    <input type="range" id="sDist" min="0" max="100" step="0.5" value="0" disabled>
+    <div class="row"><label title="Hauteur angulaire du Soleil au-dessus de l'horizon." data-alt2sec="Le zénith (90°) est le point du ciel juste au-dessus de la tête. Plus le Soleil est bas, plus les colonnes de lumière sont rasantes et longues.">Zénith ↕</label><output id="oEl"></output></div>
+    <input type="range" id="sEl" min="0" max="90" step="0.5" value="26" title="Hauteur angulaire du Soleil." data-alt2sec="Le zénith (90°) est le point du ciel juste au-dessus de la tête. Plus le Soleil est bas, plus les colonnes de lumière sont rasantes et longues.">
+    <div class="row"><label title="Direction horizontale du Soleil." data-alt2sec="0° = face à vous par défaut. Tourner l'azimut revient à faire tourner la Terre : la géométrie des colonnes ne change pas, seule votre orientation par rapport à elles change.">Azimut ↔</label><output id="oAz"></output></div>
+    <input type="range" id="sAz" min="-180" max="180" step="1" value="0" title="Direction horizontale du Soleil." data-alt2sec="0° = face à vous par défaut. Tourner l'azimut revient à faire tourner la Terre : la géométrie des colonnes ne change pas, seule votre orientation par rapport à elles change.">
+    <label class="sw"><input type="checkbox" id="cDiv" title="Simule un Soleil proche, à distance finie, au lieu d'un Soleil à l'infini." data-alt2sec="De face, cocher ou décocher ne change rien à l'image : c'est tout le problème. La différence n'apparaît que dos au Soleil, et dans la vue extérieure — voir le curseur Distance ci-dessous."><span>Soleil <em>proche</em> : rayons vraiment divergents</span></label>
+    <div class="row"><label title="Distance du Soleil, échelle logarithmique." data-alt2sec="Actif seulement si « Soleil proche » est coché. Va de juste au-dessus des nuages jusqu'à la vraie distance du Soleil (150 millions de km).">Distance du Soleil <span style="opacity:.55">(log)</span></label><output id="oDist"></output></div>
+    <input type="range" id="sDist" min="0" max="100" step="0.5" value="0" disabled title="Distance du Soleil, échelle logarithmique." data-alt2sec="Actif seulement si « Soleil proche » est coché. Va de juste au-dessus des nuages jusqu'à la vraie distance du Soleil (150 millions de km).">
   </div>
 
   <div class="grp">
     <h2>L'atmosphère</h2>
-    <div class="row"><label>Poussières / aérosols</label><output id="oDen"></output></div>
-    <input type="range" id="sDen" min="0" max="100" step="1" value="55">
-    <label class="sw"><input type="checkbox" id="cCloud" checked><span>Couche nuageuse trouée</span></label>
-    <div class="row"><label>Altitude de la couche</label><output id="oH"></output></div>
-    <input type="range" id="sH" min="400" max="6000" step="50" value="2200">
+    <div class="row"><label title="Quantité de poussières dans l'air." data-alt2sec="Sans particules en suspension, un faisceau de lumière est invisible de côté : rien ne dévie les photons vers l'œil. C'est la diffusion de Mie qui rend les colonnes visibles.">Poussières</label><output id="oDen"></output></div>
+    <input type="range" id="sDen" min="0" max="100" step="1" value="55" title="Quantité de poussières dans l'air." data-alt2sec="Sans particules en suspension, un faisceau de lumière est invisible de côté : rien ne dévie les photons vers l'œil. C'est la diffusion de Mie qui rend les colonnes visibles.">
+    <label class="sw"><input type="checkbox" id="cCloud" checked title="Active la couche de nuages troués au-dessus." data-alt2sec="Les nuages ne créent pas les rayons, ils créent les ombres : la lumière arrive partout, le nuage en bloque des morceaux. Restent des colonnes d'air éclairé alternant avec des colonnes à l'ombre."><span>Couche nuageuse trouée</span></label>
+    <div class="row"><label title="Altitude de la couche de nuages." data-alt2sec="Plus la couche est haute, plus les colonnes de lumière sont longues et l'éventail visible de loin.">Altitude de la couche</label><output id="oH"></output></div>
+    <input type="range" id="sH" min="400" max="6000" step="50" value="2200" title="Altitude de la couche de nuages." data-alt2sec="Plus la couche est haute, plus les colonnes de lumière sont longues et l'éventail visible de loin.">
   </div>
 
   <div class="grp">
     <h2>Regard &amp; projection</h2>
-    <div class="row"><label>Focale</label><output id="oFov"></output></div>
-    <input type="range" id="sFov" min="2" max="110" step="1" value="66">
-    <p class="note" id="teleNote" style="margin:2px 0 9px"></p>
-    <label class="sw"><input type="checkbox" id="cOrtho"><span>Projection <em>orthographique</em> (sans perspective)</span></label>
-    <p class="note" style="margin:4px 0 8px">C'est la limite du curseur ci-dessus :
-      focale infinie, recul infini. Poussez la focale à fond, puis cochez — vous ne
-      verrez presque plus de différence.</p>
-    <label class="sw"><input type="checkbox" id="cAxes"><span>Tracer l'axe de chaque colonne</span></label>
-    <label class="sw"><input type="checkbox" id="cVP" checked><span>Marquer le <em>point de fuite</em></span></label>
+    <div class="row"><label id="lblFocale" title="Champ de vision de la caméra (crop de l'image)." data-alt2sec="Change uniquement le cadrage : l'observateur ne bouge pas. Pour reculer réellement l'observateur, utilisez la molette dans la vue principale.">Focale</label><output id="oFov"></output></div>
+    <input type="range" id="sFov" min="2" max="110" step="1" value="66" title="Champ de vision (crop de l'image)." data-alt2sec="Change uniquement le cadrage : l'observateur ne bouge pas. Pour reculer réellement l'observateur, utilisez la molette dans la vue principale.">
+    <label class="sw"><input type="checkbox" id="cOrtho" title="Projection sans perspective (parallèle)." data-alt2sec="Des droites parallèles dans l'espace le restent à l'écran : plus aucun point de fuite. C'est la même projection que celle utilisée dans la vue extérieure."><span>Projection <em>orthographique</em> (sans perspective)</span></label>
+    <label class="sw"><input type="checkbox" id="cAxes" title="Trace l'axe géométrique de chaque colonne de lumière." data-alt2sec="Utile pour vérifier que les colonnes sont bien parallèles dans l'espace : suivez un axe jusqu'à la vue extérieure."><span>Tracer l'axe de chaque colonne</span></label>
+    <label class="sw"><input type="checkbox" id="cVP" checked title="Marque le point où les colonnes semblent converger à l'écran." data-alt2sec="Une famille de droites parallèles n'a qu'un seul point de fuite projectif : le Soleil devant vous, le point antisolaire dans votre dos."><span>Marquer le <em>point de fuite</em></span></label>
     <div class="btns">
       <button id="bSun">Regarder le Soleil</button>
       <button id="bAnti">Regarder à l'opposé</button>
@@ -159,6 +125,7 @@
 
 </div>
 
+<script src="../_interfaces/tooltips.js"></script>
 <script type="importmap">
 {"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}
 </script>
@@ -239,20 +206,23 @@ const scene = new THREE.Scene();
 
 const EYE = new THREE.Vector3(0,1.7,0);
 /* ---------------------------------------------------------------------------
-   Focale ET recul liés — le « travelling compensé »
+   Observateur et focale, DÉCOUPLÉS
    ----------------------------------------------------------------------------
-   Allonger la focale seule ne supprime rien : recadrer agrandit l'image, les
-   colonnes continuent de converger vers le même point. Ce qui aplatit la
-   perspective, c'est de S'ÉLOIGNER ; le téléobjectif ne fait que permettre de
-   cadrer de loin. On lie donc les deux : le cadrage reste constant, seule la
-   distance de l'observateur change. À la limite (focale infinie, recul infini)
-   on obtient exactement la projection orthographique.
-   L'observateur reste à hauteur d'yeux : il recule au sol, il ne s'enterre pas.
+   La molette déplace l'observateur (recul réel, un « travelling ») : la
+   position change, le cadrage (focale) n'est pas touchée.
+   Le curseur Focale change uniquement le champ de vision de la caméra, à
+   position fixe : c'est un cadrage/recadrage, l'observateur ne bouge pas.
    ------------------------------------------------------------------------ */
-const ANCHOR_D = 8000;                                   // point visé, à 8 km
-const FOV_REF  = 66;                                     // focale de référence
-const S_HALF   = ANCHOR_D*Math.tan(FOV_REF*Math.PI/360); // demi-hauteur cadrée
-const _anchor = new THREE.Vector3(), _cpos = new THREE.Vector3();
+// Position accumulée de l'observateur — un ÉTAT, pas une formule dépendant du
+// regard. Avant, la position se recalculait chaque frame à partir de la
+// direction COURANTE (EYE - fwd*recul) : tourner la tête (glisser, ou les
+// boutons Regarder…) changeait alors aussi la position, en faisant orbiter
+// l'observateur autour de EYE au lieu de le laisser tourner sur place — d'où
+// les trous de nuage qui redevenaient nets en cliquant « Regarder à l'opposé »
+// alors même qu'on avait reculé. La molette ne fait plus que translater ce
+// point ; tourner la tête ne le touche jamais.
+const camPos = EYE.clone();
+const ORTHO_D = 8000;                  // distance de référence pour cadrer la vue orthographique
 const FAR = 300000;
 const camP = new THREE.PerspectiveCamera(CFG.fov, 1, 1, FAR);
 const camO = new THREE.OrthographicCamera(-1,1,1,-1,-FAR/2,FAR);
@@ -262,7 +232,17 @@ const camO = new THREE.OrthographicCamera(-1,1,1,-1,-FAR/2,FAR);
 const camX = new THREE.OrthographicCamera(-1,1,1,-1, -260000, 460000);
 let cam = camP;
 let yaw = Math.PI, pitch = 0.12;
-const ex = {th:-0.85, ph:0.14, r:2700, tgt:new THREE.Vector3(0,1150,0), auto:true};
+// Cadrage par défaut : presque rasant (EX_PH), depuis derrière l'observateur,
+// dans l'axe azimut 0° (face). Projection parallèle + regard dans le plan
+// vertical du Soleil : les colonnes sont VERTICALES à l'écran, quelle que soit
+// la hauteur du Soleil. Le cadrage est fixe par rapport au monde : tourner
+// l'azimut les fait pencher.
+const EX_PH = 0.03;
+const ex = {th:-Math.PI/2, ph:EX_PH, r:14000, tgt:new THREE.Vector3(0,1150,0)};
+const EX_D = 120000;   // recul fixe de la caméra de la vue extérieure
+// Plafond de l'angle vers le bas : interdit de passer sous le sol (on garde
+// au moins 1 m d'altitude), quel que soit ex.tgt.
+function exPhMin(){ return Math.asin(Math.min(1, Math.max(-1, (1-ex.tgt.y)/EX_D))); }
 
 const HAZE = new THREE.Color(0.60,0.66,0.77);
 const viewDirU = {value:new THREE.Vector3(0,0,-1)};   // direction de visée (mode ortho)
@@ -270,6 +250,7 @@ const fogK     = {value:1};   // voile atmosphérique (atténué dans la vue ext
 const dfadeU   = {value:1};   // atténuation avec la distance (désactivée en vue extérieure)
 const gainU    = {value:1};   // gain de rendu des colonnes (exposition de la vue extérieure)
 const orthoU   = {value:0};
+const occU     = {value:1};   // masquage des colonnes par la couche (0 : nuage fantôme de la vue extérieure)
 
 /* ---------------------------------------------------------------------------
    bruit partagé (GLSL)
@@ -336,19 +317,26 @@ const groundMat = new THREE.ShaderMaterial({
     ${NOISE}
     void main(){
       vec3 s = (uDiv>0.5) ? normalize(uSunP - vW) : uToSun;
-      float lit = 0.0;
+      float lit = 1.0;
       if(uClouds>0.5){
-        if(s.y>0.02){
+        if(s.y>0.003){
           float t = uH/s.y;
           vec2 q = vW.xz + t*s.xz;
+          lit = 0.0;
           for(int i=0;i<${NH};i++){
             if(i>=uN) break;
             float d = distance(q, uHoles[i].xy);
             lit = max(lit, smoothstep(uHoles[i].z, uHoles[i].z*0.70, d));
             if(lit > 0.999) break;
           }
+          // Le nuage lui-même est un DISQUE (cf. cloud, même fondu 80-120 km) :
+          // au-delà, il n'y a plus de nuage du tout, donc plus d'ombre — sans
+          // ce fondu, l'ombre resterait uniformément noire jusqu'au bord du
+          // plan de sol (un carré), alors qu'elle doit s'arrêter en disque.
+          float discFade = 1.0 - smoothstep(80000.0, 120000.0, length(q));
+          lit = mix(1.0, lit, discFade);
         }
-      } else lit = 1.0;
+      }
       float n = fbm(vW.xz*0.0022)*0.7 + fbm(vW.xz*0.019)*0.3;
       // Gros damier de 20 m : repère de perspective, filtré pour ne pas
       // scintiller au loin (il se fond en gris moyen quand les cases deviennent
@@ -364,6 +352,15 @@ const groundMat = new THREE.ShaderMaterial({
       vec3 dark = vec3(0.58,0.61,0.66)*(0.88+n*0.24)*tile;
       vec3 brig = vec3(1.00,0.93,0.74)*(0.88+n*0.24)*tile;
       vec3 col = mix(dark, brig, lit);
+      // Repère de direction : de grosses cases pleines (rouge = une colonne
+      // sur deux le long de X, bleu = une rangée sur deux le long de Z),
+      // superposées au damier N&B — sans ça, un damier pur peut sembler
+      // immobile ou reculer quand on avance (illusion de type « roue de char »).
+      const float BIGCELL = 250.0;
+      float bx = mod(floor(vW.x/BIGCELL), 2.0);
+      float bz = mod(floor(vW.z/BIGCELL), 2.0);
+      col = mix(col, vec3(1.0,0.10,0.10), bx*0.45);
+      col = mix(col, vec3(0.10,0.20,1.0), bz*0.45);
       float d = length(vW - cameraPosition);
       col = mix(col, uHaze*0.86, (1.0-exp(-d/7500.0))*uFogK);
       gl_FragColor = vec4(col,1.0);
@@ -416,7 +413,7 @@ const cloudMat = new THREE.ShaderMaterial({
       gl_FragColor = vec4(col, a);
     }`
 });
-const cloud = new THREE.Mesh(new THREE.PlaneGeometry(140000,140000), cloudMat);
+const cloud = new THREE.Mesh(new THREE.CircleGeometry(125000,96), cloudMat);
 cloud.rotation.x = -Math.PI/2; cloud.position.y = CFG.H; scene.add(cloud);
 
 /* ---------------------------------------------------------------------------
@@ -435,15 +432,22 @@ const beamFrag = `precision highp float;
   uniform float uOrtho, uDfade, uGain;
   uniform vec3 uView;    // direction de visée (mode orthographique)
   uniform vec3 uCol;
+  uniform vec3 uHoles[${NH}];
+  uniform float uOcc;
   void main(){
     vec3 V, O;
     if(uOrtho > 0.5){ V = normalize(uView); O = vW - V*80000.0; }
     else            { V = normalize(vW - cameraPosition); O = cameraPosition; }
 
-    vec3 w  = O - uA;
-    vec3 wP = w - dot(w,uD)*uD;
-    vec3 vP = V - dot(V,uD)*uD;
-    float a = dot(vP,vP), b = 2.0*dot(wP,vP), c = dot(wP,wP) - uR*uR;
+    // Un point de l'air est éclairé si, en remontant vers le Soleil jusqu'au
+    // plan des nuages, on tombe dans le trou. La colonne est donc le trou
+    // translaté le long de uD : un cylindre OBLIQUE à base circulaire
+    // horizontale, dont la section perpendiculaire est une ellipse r × r·sin(h).
+    // (Un cylindre droit de rayon r serait une triche : trop épais en lumière
+    // rasante, et encore visible à hauteur nulle.)
+    vec2 w = (O - uD*((O.y-uTop)/uD.y) - uA).xz;
+    vec2 v = (V - uD*(V.y/uD.y)).xz;
+    float a = dot(v,v), b = 2.0*dot(w,v), c = dot(w,w) - uR*uR;
     float t0, t1;
     if(a < 1e-9){                       // regard exactement parallèle à l'axe
       if(c > 0.0) discard;
@@ -464,6 +468,24 @@ const beamFrag = `precision highp float;
     float seg = tf - tn;                // air éclairé traversé par le regard
     if(seg <= 0.0) discard;
 
+    // Vu d'au-dessus, la couche cache l'air situé dessous, sauf à travers un
+    // trou. Calculé ici plutôt que par le tampon de profondeur : la face arrière
+    // du cylindre incliné n'est pas à la profondeur de l'air éclairé (elle
+    // dépasse au-dessus du plan près du trou), et le test de profondeur y
+    // découpait la colonne en croissant à bord net.
+    float vis = 1.0;
+    if(uOcc > 0.5 && O.y > uTop && V.y < 0.0){
+      vec2 q = (O + V*((uTop-O.y)/V.y)).xz;
+      float a = 1.0;                    // même opacité que le shader de la couche
+      for(int i=0;i<${NH};i++){
+        float r = uHoles[i].z;
+        a *= smoothstep(r*0.80, r*1.18, distance(q, uHoles[i].xy));
+      }
+      a *= 1.0 - smoothstep(80000.0, 120000.0, length(q));
+      vis = 1.0 - a;
+      if(vis < 0.002) discard;
+    }
+
     float ct = -dot(V, uD);             // +1 : on regarde vers le Soleil (diffusion avant)
     const float g = 0.50, gg = 0.25;
     float ph = (1.0-gg)/pow(max(1.0+gg-2.0*g*ct, 1e-4), 1.5);
@@ -474,7 +496,7 @@ const beamFrag = `precision highp float;
     float ext   = exp(-clamp(1.0-P.y/uTop,0.0,1.0)*1.15);
     float dfade = mix(1.0, 1.0/(1.0 + length(P-cameraPosition)/40000.0), uDfade);
     float I = uGain*uDen*(seg/6000.0)*ph*ext*dfade;
-    gl_FragColor = vec4(uCol*(1.0-exp(-I)), 1.0);
+    gl_FragColor = vec4(uCol*(1.0-exp(-I))*vis, 1.0);
   }`;
 const beamVert = `varying vec3 vW;
   void main(){ vW=(modelMatrix*vec4(position,1.)).xyz;
@@ -491,8 +513,11 @@ for(const h of holes){
     uniforms:{ uA:{value:new THREE.Vector3()}, uD:{value:new THREE.Vector3()},
                uR:{value:h.r}, uTop:{value:CFG.H}, uDen:{value:0.55},
                uOrtho:orthoU, uView:viewDirU, uDfade:dfadeU, uGain:gainU,
+               uHoles:{value:holeUni}, uOcc:occU,
                uCol:{value:new THREE.Color(1.0,0.90,0.70)} },
     transparent:true, blending:THREE.AdditiveBlending,
+    // Pas de test de profondeur : sol et couche sont déjà traités
+    // analytiquement dans le shader (tranche 0..uTop, masquage par les trous).
     depthWrite:false, depthTest:false, side:THREE.BackSide
   });
   const m = new THREE.Mesh(unitCyl, mat); m.renderOrder = 5; m.frustumCulled = false;
@@ -506,20 +531,31 @@ for(const h of holes){
 }
 
 const _d = new THREE.Vector3(), _a = new THREE.Vector3();
+const BEAM_MIN_SIN = 0.003;          // ≈ 0,17° : ruban de moins de 3 m
 function rebuildBeams(){
   const H = CFG.H;
   for(const b of bo){
     _a.set(b.h.x, H, b.h.z);
     if(CFG.diverge) _d.copy(_a).sub(fakeSunPos).normalize();
     else            _d.copy(rayDir);          /* ← LA MÊME DIRECTION POUR TOUTES */
-    if(_d.y > -0.015){ _d.y = -0.015; _d.normalize(); }
+    // Soleil (quasi) à l'horizon : la colonne devient un ruban d'épaisseur
+    // r·sin(h) → 0. Plus rien ne passe : on la retire plutôt que de la tordre.
+    const on = _d.y < -BEAM_MIN_SIN;
+    b.mesh.visible = on; b.line.visible = on;
+    if(!on) continue;
     const L = H/(-_d.y);
+    // Le cylindre est un simple support de rasterisation : ses bouchons sont
+    // perpendiculaires à l'axe, donc inclinés, et couperaient l'air éclairé
+    // près du trou et près du sol (où la section est le disque du trou, qui
+    // déborde d'au plus r le long de l'axe). On le prolonge d'autant aux deux
+    // bouts ; le shader découpe exactement.
+    const ext = 1.3*b.h.r;
     b.mat.uniforms.uA.value.copy(_a);
     b.mat.uniforms.uD.value.copy(_d);
     b.mat.uniforms.uTop.value = H;
     b.mesh.quaternion.setFromUnitVectors(YUP,_d);
     b.mesh.position.copy(_a).addScaledVector(_d, L*0.5);
-    b.mesh.scale.set(b.h.r*1.3, L, b.h.r*1.3);
+    b.mesh.scale.set(b.h.r*1.3, L+2*ext, b.h.r*1.3);
     const p = b.line.geometry.attributes.position;
     p.setXYZ(0,_a.x,_a.y,_a.z);
     p.setXYZ(1,_a.x+_d.x*L, _a.y+_d.y*L, _a.z+_d.z*L);
@@ -534,28 +570,47 @@ const helpers = new THREE.Group(); scene.add(helpers);
 // Quadrillages de lecture : sans eux la vue extérieure est illisible — on ne
 // distingue ni le sol, ni l'altitude de la couche. Maille de 2 km.
 const gGround = new THREE.GridHelper(60000, 30, 0x46607a, 0x2c3a4a);
-const gCloud  = new THREE.GridHelper(60000, 30, 0x7c7c88, 0x53535d);
+// La couche nuageuse est un disque (cf. cloud), pas un carré : sa grille de
+// lecture doit avoir la même forme, sinon elle se lit comme le contour réel
+// du nuage et laisse croire qu'il est carré.
+const gCloud  = new THREE.PolarGridHelper(30000, 16, 15, 64, 0x7c7c88, 0x53535d);
 for(const g of [gGround, gCloud]){
   g.material.transparent = true; g.material.opacity = 0.5;
   g.material.depthTest = false; g.renderOrder = 2;
   helpers.add(g);
 }
+// Rouge = l'observateur, vert = l'écran, dégradé entre les deux : sans repère
+// de couleur, impossible de dire si le cône pointe vers soi ou vers le fond.
+const COBS = new THREE.Color(1.0,0.20,0.20), CSCR = new THREE.Color(0.25,1.0,0.35);
 const obs = new THREE.Mesh(new THREE.SphereGeometry(90,16,12),
-  new THREE.MeshBasicMaterial({color:new THREE.Color(0.45,0.85,1.0)}));
-obs.position.set(0,90,0); helpers.add(obs);
+  new THREE.MeshBasicMaterial({color:COBS, depthTest:false}));
+obs.renderOrder = 21; obs.position.set(0,90,0); helpers.add(obs);
 const frGeo = new THREE.BufferGeometry();
 frGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(16*3),3));
+{ // 4× [eye, écran, écran, écran] : seul le 1er sommet de chaque groupe de 4 est l'œil
+  const c = new Float32Array(16*3);
+  for(let i=0;i<16;i++) (i%4===0?COBS:CSCR).toArray(c, i*3);
+  frGeo.setAttribute('color', new THREE.BufferAttribute(c,3));
+}
+// Le cône observateur↔écran doit rester lisible en permanence dans la vue
+// extérieure : depthTest désactivé et renderOrder élevé, pour qu'il passe
+// devant le sol, les nuages et le quadrillage plutôt que d'être masqué par eux.
 const frustum = new THREE.LineSegments(frGeo, new THREE.LineBasicMaterial({
-  color:new THREE.Color(0.42,0.83,1.0), transparent:true, opacity:.8}));
-frustum.frustumCulled = false; helpers.add(frustum);
+  vertexColors:true, transparent:true, opacity:.8, depthTest:false}));
+frustum.renderOrder = 20; frustum.frustumCulled = false; helpers.add(frustum);
 // Volume translucide + flèche : en fil de fer seul, impossible de dire si le
 // cône de vision pointe vers nous ou vers le fond.
 const wedgeGeo = new THREE.BufferGeometry();
 wedgeGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(4*3*3),3));
+{ // par face : [eye, coin écran, coin écran]
+  const c = new Float32Array(4*3*3);
+  for(let i=0;i<12;i++) (i%3===0?COBS:CSCR).toArray(c, i*3);
+  wedgeGeo.setAttribute('color', new THREE.BufferAttribute(c,3));
+}
 const wedge = new THREE.Mesh(wedgeGeo, new THREE.MeshBasicMaterial({
-  color:new THREE.Color(0.35,0.75,1.0), transparent:true, opacity:0.13,
+  vertexColors:true, transparent:true, opacity:0.16,
   side:THREE.DoubleSide, depthWrite:false, depthTest:false}));
-wedge.renderOrder = 3; wedge.frustumCulled = false; helpers.add(wedge);
+wedge.renderOrder = 19; wedge.frustumCulled = false; helpers.add(wedge);
 const viewArrow = new THREE.ArrowHelper(new THREE.Vector3(0,0,-1), EYE.clone(),
   6200, 0x6fd3ff, 950, 430);
 viewArrow.line.material.depthTest = false; viewArrow.cone.material.depthTest = false;
@@ -615,9 +670,8 @@ addEventListener('pointermove', e=>{
   if(!drag) return;
   const dx=e.clientX-drag.x, dy=e.clientY-drag.y; drag.x=e.clientX; drag.y=e.clientY;
   if(drag.ins){
-    ex.auto = false;
     ex.th -= dx*0.006;
-    ex.ph = Math.max(-0.25, Math.min(1.35, ex.ph + dy*0.005));
+    ex.ph = Math.max(exPhMin(), Math.min(1.35, ex.ph + dy*0.005));
   }else{
     const k = (CFG.fov/66)*0.0028;
     yaw -= dx*k;
@@ -628,17 +682,26 @@ addEventListener('pointerup', ()=>{ drag=null; insetEl.classList.remove('d'); })
 addEventListener('wheel', e=>{
   if(e.target.closest('#panel')) return;
   if(inInset(e.clientX,e.clientY))
-    ex.r = Math.max(900, Math.min(26000, ex.r*(1+Math.sign(e.deltaY)*0.12)));
-  else
-    set('sFov', Math.max(2, Math.min(110, Math.round(CFG.fov*(1+Math.sign(e.deltaY)*0.09)))));
+    // borne haute : la couche nuageuse est un disque de 125 km de rayon (cf.
+    // cloud, fondu 80-120 km) — il faut pouvoir reculer assez pour le voir en
+    // entier, pas seulement sa portion centrale.
+    ex.r = Math.max(900, Math.min(160000, ex.r*(1+Math.sign(e.deltaY)*0.12)));
+  else{
+    // la molette déplace l'observateur le long du regard ACTUEL (translation
+    // réelle) — la focale n'est pas touchée, et tourner la tête ensuite ne
+    // rejoue jamais ce déplacement. Pas constant en mètres, linéaire (pas
+    // exponentiel), pas de borne min/max (un zoom, c'est juste une
+    // translation), pas multiple de la case du damier (20 m) pour ne pas
+    // retomber sur la même phase à chaque cran (illusion type « roue de char »).
+    camPos.addScaledVector(_fwd, -Math.sign(e.deltaY)*90);
+    if(camPos.y < 0.5) camPos.y = 0.5;   // on recule au sol, pas sous terre
+  }
 },{passive:true});
 
 /* ============================================================================
    UI
    ========================================================================== */
 const $ = id=>document.getElementById(id);
-const teleN = document.getElementById('teleNote');
-let lastTele = '';
 let mainGain = 1;
 function set(id,v){ const el=$(id); el.value=v; el.dispatchEvent(new Event('input')); }
 function sw(id,v){ const el=$(id); el.checked=v; el.dispatchEvent(new Event('change')); }
@@ -659,14 +722,25 @@ bindRange('sH','H', v=> v>=1000 ? (v/1000).toFixed(1)+' km' : v+' m',
           ()=>{ cloud.position.y=CFG.H; redistance(); });
 // Le fov de three.js est VERTICAL : l'équivalence en focale doit donc se faire
 // sur la demi-hauteur du 24x36 (12 mm), pas sur la demi-largeur (18 mm).
-bindRange('sFov','fov', v=> Math.round(12/Math.tan(v*Math.PI/360))+' mm · '+v.toFixed(0)+'°');
+// En ortho, il n'y a ni point de vue ni focale : le même curseur ne fait plus
+// que régler l'échelle du cadrage — on l'affiche donc comme une distance
+// (demi-largeur visible), pas comme une focale en mm.
+bindRange('sFov','fov', v=> CFG.ortho
+  ? '±'+fmtDist(ORTHO_D*Math.tan(v*Math.PI/360))+' visible'
+  : Math.round(12/Math.tan(v*Math.PI/360))+' mm · '+v.toFixed(0)+'°');
 // fakeDist() dépend de la hauteur du Soleil ET de l'altitude de la couche :
 // l'affichage doit donc être rafraîchi quand l'un ou l'autre bouge.
 function redistance(){ const o=$('oDist'); if(o) o.textContent = fmtDist(fakeDist()); }
 bindRange('sDist','dist', ()=> fmtDist(fakeDist()));
 bindSw('cCloud','clouds', ()=>{ cloud.visible=CFG.clouds; beams.visible=CFG.clouds;
                                 axesG.visible=CFG.clouds&&CFG.axes; });
-bindSw('cOrtho','ortho');
+bindSw('cOrtho','ortho', ()=>{
+  $('lblFocale').textContent = CFG.ortho ? 'Distance' : 'Focale';
+  $('sFov').dispatchEvent(new Event('input'));   // rafraîchit l'affichage (mm/° ↔ distance)
+  // en projection parallèle, des droites parallèles le restent à l'écran :
+  // il n'y a plus de point de fuite à marquer.
+  $('cVP').disabled = CFG.ortho;
+});
 bindSw('cAxes','axes', ()=>{ axesG.visible=CFG.axes&&CFG.clouds; });
 bindSw('cVP','vp');
 
@@ -681,133 +755,6 @@ const lookAnti = ()=>{ yaw = CFG.az*Math.PI/180;
 $('bSun').onclick = lookSun;
 $('bAnti').onclick = lookAnti;
 $('bHoriz').onclick = ()=>{ pitch = 0.03; };
-
-/* ---------------------------------------------------------------------------
-   VISITE GUIDÉE
-   ------------------------------------------------------------------------ */
-const TOUR = [
-{ t:"Le Soleil n'est pas un point d'où partiraient des rayons",
-  h:`Il est à <b>150 millions de km</b> et fait <b>1,4 million de km</b> de large :
-     vu d'ici, un disque de <b>0,53°</b> — un petit pois tenu à cinq mètres.<br><br>
-     Là, il est caché derrière la couche : décochez <em>couche nuageuse</em> un
-     instant et cherchez-le. Ce point minuscule, c'est toute la source.<br><br>
-     Conséquence : deux rayons arrivant à 10 km l'un de l'autre sont parallèles
-     à <b>0,53°</b> près. Sur toute la longueur d'une colonne, la seule divergence
-     réelle est la <em>pénombre</em> : quelques dizaines de mètres (le chiffre exact
-     est dans le bandeau du bas). Rien à voir avec l'éventail qu'on voit à l'écran.<br><br>
-     <span class="k">Ici, toutes les colonnes partagent rigoureusement le même
-     vecteur directeur.</span> Vérifiez dans la <em>vue extérieure</em>, en bas à
-     droite : elles sont parallèles. Faites-la tourner.`,
-  a:()=>{ set('sEl',26); set('sAz',0); set('sDen',55); set('sH',2200); set('sFov',70);
-          sw('cCloud',true); sw('cOrtho',false); sw('cDiv',false); sw('cAxes',false);
-          sw('cVP',true); lookSun(); } },
-
-{ t:"On ne voit pas la lumière : on voit l'air qu'elle traverse",
-  h:`Un faisceau dans le vide est <b>invisible de côté</b> — aucun photon ne part
-     vers vous. Ce qu'on voit, c'est la fraction déviée vers l'œil par les
-     poussières, les gouttelettes, les embruns : la <em>diffusion de Mie</em>.<br><br>
-     Les poussières viennent d'être mises à <b>0</b> : plus un seul rayon, alors que
-     la géométrie n'a pas bougé d'un iota. Remontez le curseur — les colonnes
-     réapparaissent.<br><br>
-     <span class="k">Ce n'est pas de la diffraction.</span> La diffraction est un
-     phénomène d'échelle micrométrique (couronnes, gloires, irisations) ; elle ne
-     fabrique pas des colonnes de 10 km.`,
-  a:()=>{ set('sEl',26); set('sDen',0); set('sFov',70); sw('cCloud',true);
-          sw('cOrtho',false); sw('cDiv',false); sw('cAxes',false); sw('cVP',true); lookSun(); } },
-
-{ t:"Les nuages ne fabriquent pas les rayons : ils fabriquent les ombres",
-  h:`La lumière arrive partout, uniformément. Le nuage en bloque des morceaux.
-     Restent des <b>colonnes d'air éclairé</b> alternant avec des
-     <b>colonnes d'air à l'ombre</b>. C'est le <em>contraste</em> entre les deux
-     qui dessine ce qu'on appelle « un rayon ».<br><br>
-     Décochez <em>couche nuageuse</em> : tout s'éclaire uniformément, les rayons
-     disparaissent. Et regardez les <b>taches au sol</b> : ce sont exactement les
-     trous du nuage, projetés obliquement.`,
-  a:()=>{ set('sEl',30); set('sDen',62); set('sFov',74); sw('cCloud',true);
-          sw('cOrtho',false); sw('cDiv',false); sw('cAxes',false); sw('cVP',false);
-          pitch = 0.30; yaw = CFG.az*Math.PI/180 + Math.PI; } },
-
-{ t:"L'éventail, c'est de la perspective. Uniquement.",
-  h:`Des droites parallèles, en projection perspective, convergent vers un
-     <b>point de fuite</b> : la projection de leur <em>direction</em>. Cette
-     direction est celle du Soleil, donc le point de fuite <b>est</b> le Soleil.
-     Comme des rails, une allée de peupliers, les bords d'une route.<br><br>
-     Les axes des colonnes sont tracés en orange. Maintenant, allongez la
-     <em>focale</em> : à cadrage constant, allonger la focale c'est
-     <b>reculer</b> — la simulation éloigne l'observateur d'autant, et affiche
-     de combien. Vers <b>230 mm</b> il est à une centaine de kilomètres, et les
-     colonnes sont devenues <b>parallèles à l'écran</b>.<br><br>
-     <span class="k">Rien n'a bougé dans le monde : vous l'avez seulement
-     regardé de plus loin.</span> Attention, zoomer <em>sans</em> reculer ne
-     donnerait rien — recadrer agrandit l'image, les colonnes continueraient de
-     converger vers le même point. C'est l'éloignement qui aplatit, le
-     téléobjectif ne fait que permettre de cadrer de loin.`,
-  a:()=>{ set('sEl',24); set('sDen',62); set('sFov',78); sw('cCloud',true);
-          sw('cAxes',true); sw('cVP',true); sw('cDiv',false); sw('cOrtho',false); lookSun(); } },
-
-{ t:"La preuve : tournez-vous. Ils convergent aussi derrière vous.",
-  h:`Si les rayons divergeaient réellement depuis le Soleil, en regardant à
-     l'opposé ils devraient s'écarter de plus en plus. Ils font l'inverse : ils
-     <b>reconvergent</b> vers le <em>point antisolaire</em>, à l'opposé exact du
-     Soleil. Ce sont les <b>rayons anti-crépusculaires</b> — bien réels, et
-     photographiés couramment.<br><br>
-     Une famille de droites parallèles n'a qu'<b>un seul</b> point de fuite : on le
-     voit devant soi comme « le Soleil », et derrière soi comme « l'antisoleil ».
-     <span class="k">Deux convergences opposées : signature imparable de la
-     perspective.</span>`,
-  a:()=>{ set('sEl',12); set('sDen',72); set('sFov',86); sw('cCloud',true);
-          sw('cAxes',true); sw('cVP',true); sw('cDiv',false); sw('cOrtho',false); lookAnti(); } },
-
-{ t:"Rapprochons le Soleil. Et là : rien ne change.",
-  h:`Il vient d'être ramené à <b>8 km</b>. Regardez l'éventail… il est
-     <b>identique</b>. Poussez la distance jusqu'à 149,6 millions de km : toujours
-     identique. Ce n'est pas un défaut de la simulation, <em>c'est le nœud de
-     l'affaire</em>.<br><br>
-     Raison : l'image d'une droite qui passe par le Soleil passe forcément par
-     l'image du Soleil. Que les colonnes soient <b>parallèles</b> (elles se
-     coupent à l'infini, dans la direction du Soleil) ou qu'elles <b>partent
-     réellement d'un point</b> à 8 km, dans les deux cas elles rayonnent depuis
-     le Soleil tel qu'on le voit. <span class="k">De face, les deux hypothèses
-     sont rigoureusement indiscernables.</span> Voilà pourquoi l'explication
-     fausse est si tentante.<br><br>
-     Deux détails qui comptent. Le Soleil ne grossit pas en se rapprochant :
-     on lui garde ses <b>0,53°</b>, puisque c'est ce qu'on observe et que toute
-     hypothèse doit le reproduire — à 8 km, cela lui fait <b>78 m</b> de diamètre
-     (chiffre en bas). Et la <em>vue extérieure</em>, elle, montre bien un
-     éventail réel : la divergence existe, elle est juste invisible d'ici.`,
-  a:()=>{ set('sEl',28); set('sDen',60); set('sFov',76); sw('cCloud',true);
-          sw('cAxes',true); sw('cVP',true); sw('cOrtho',false);
-          sw('cDiv',true); set('sDist',0); lookSun(); } },
-
-{ t:"Le test qui tranche : tournez le dos au Soleil",
-  h:`Vous regardez maintenant à l'opposé, Soleil proche. Les colonnes
-     <b>s'écartent</b>, indéfiniment, sans jamais se rejoindre. C'est ce que fait
-     une vraie source ponctuelle.<br><br>
-     Décochez <em>Soleil proche</em> — sans rien toucher d'autre. Les mêmes
-     colonnes <b>reconvergent</b> vers le point antisolaire.
-     <span class="k">C'est la seule chose, dans tout le ciel, qui distingue les
-     deux hypothèses</span> (avec le parallélisme des ombres au sol).<br><br>
-     Et le ciel réel tranche sans ambiguïté : les <b>rayons anti-crépusculaires</b>
-     convergent, ils sont photographiés couramment. Donc le Soleil est à l'infini,
-     l'air est poussiéreux, les nuages sont troués, et l'éventail n'est que de la
-     perspective. La Terre peut rester ronde.`,
-  a:()=>{ set('sEl',24); set('sDen',72); set('sFov',86); sw('cCloud',true);
-          sw('cAxes',true); sw('cVP',true); sw('cOrtho',false);
-          sw('cDiv',true); set('sDist',0); lookAnti(); } }
-];
-let ti = 0;
-function showTour(){
-  const s = TOUR[ti];
-  $('tnum').textContent='ÉTAPE '+(ti+1);
-  $('ttit').textContent=s.t;
-  $('ttxt').innerHTML=s.h;
-  $('tdot').textContent=(ti+1)+' / '+TOUR.length;
-  $('tprev').disabled = ti===0;
-  $('tnext').textContent = ti===TOUR.length-1 ? '↺ Reprendre' : 'Suite ›';
-  s.a&&s.a();
-}
-$('tnext').onclick=()=>{ ti=(ti+1)%TOUR.length; showTour(); };
-$('tprev').onclick=()=>{ ti=Math.max(0,ti-1); showTour(); };
 
 /* ============================================================================
    OVERLAY 2D — point de fuite
@@ -904,7 +851,7 @@ function drawOverlay(w,h){
   o2.textAlign = flip ? 'right' : 'left';
   const tx = p.x + (flip ? -38 : 38);
   o2.font='600 12px -apple-system,system-ui,sans-serif'; o2.fillStyle=`rgba(${col},.98)`;
-  o2.fillText(sunFront ? 'point de fuite = direction du Soleil'
+  o2.fillText(sunFront ? 'point de fuite = direction du Soleil, depuis votre point de vue'
                       : 'point de fuite ANTISOLAIRE — rayons anti-crépusculaires', tx, p.y+4);
   o2.font='11px -apple-system,system-ui,sans-serif'; o2.fillStyle='rgba(255,255,255,.55)';
   o2.fillText('une seule famille de parallèles → un seul point de fuite', tx, p.y+21);
@@ -988,7 +935,7 @@ function resize(){
   camP.aspect=W/H; camP.updateProjectionMatrix();
 }
 addEventListener('resize', resize); resize();
-showTour();
+lookSun();   // vue de départ orientée vers le Soleil, pour bien voir les colonnes
 
 const _e = new THREE.Euler(0,0,0,'YXZ'), _fwd = new THREE.Vector3();
 function tick(){
@@ -1006,58 +953,42 @@ function tick(){
   groundMat.uniforms.uDiv.value = CFG.diverge?1:0;
   orthoU.value = CFG.ortho?1:0;
 
-  // --- direction visée (souris) → point d'ancrage du cadrage
+  // --- direction visée (souris)
   _e.set(pitch,yaw,0);
   camP.quaternion.setFromEuler(_e);
   _fwd.set(0,0,-1).applyQuaternion(camP.quaternion);
-  _anchor.copy(EYE).addScaledVector(_fwd, ANCHOR_D);
 
-  // --- recul imposé par la focale, à cadrage constant
-  const dolly = S_HALF/Math.tan(CFG.fov*Math.PI/360);
-  _cpos.copy(_anchor).addScaledVector(_fwd, -dolly);
-  if(_cpos.y < EYE.y){          // on recule au sol, pas sous terre
-    const dy = _anchor.y - EYE.y;
-    const hl = Math.hypot(_fwd.x, _fwd.z) || 1e-6;
-    const horiz = Math.sqrt(Math.max(1, dolly*dolly - dy*dy));
-    _cpos.set(_anchor.x - _fwd.x/hl*horiz, EYE.y, _anchor.z - _fwd.z/hl*horiz);
-  }
-  camP.position.copy(_cpos);
-  camP.lookAt(_anchor);
-  const dist = _cpos.distanceTo(_anchor);
-  camP.fov = 2*Math.atan(S_HALF/dist)*180/Math.PI;   // cadrage rigoureusement constant
+  // --- position de l'observateur : état accumulé (molette), jamais recalculé
+  // à partir du regard — tourner la tête ne doit jamais déplacer camPos.
+  if(camPos.y < 0.5) camPos.y = 0.5;   // sécurité : jamais sous terre
+  camP.position.copy(camPos);
+  camP.fov = CFG.fov;                // la focale ne fait QUE cadrer, elle ne déplace rien
   camP.updateProjectionMatrix(); camP.updateMatrixWorld();
-  _fwd.set(0,0,-1).applyQuaternion(camP.quaternion);
   viewDirU.value.copy(_fwd);
 
   // Au-delà de quelques kilomètres, l'air réel serait opaque : on éclaircit à
   // mesure du recul, sinon l'expérience de pensée se noie dans la brume.
   // Au recul, on traverse beaucoup plus de colonnes le long de chaque rayon
   // visuel : sans corriger l'exposition, tout sature en blanc.
-  const recul = dist/ANCHOR_D;
+  // recul est un RATIO (1 = position de départ), rapporté à une échelle
+  // kilométrique (8 km) sur la distance RÉELLEMENT parcourue depuis le départ —
+  // sinon quelques dizaines de mètres suffiraient à saturer la formule et à
+  // faire disparaître les colonnes juste après un petit mouvement de molette.
+  const recul = 1 + camPos.distanceTo(EYE)/8000;
   fogK.value   = Math.min(1, Math.max(0.12, 1/recul));
   dfadeU.value = Math.min(1, Math.max(0.10, 1/recul));
   mainGain     = Math.min(1, Math.pow(1/recul, 0.38));
   gainU.value  = mainGain;
-  const tt = fmtDist(dist);
-  if(teleN && tt !== lastTele){                 // écrire seulement quand ça change
-    lastTele = tt;
-    teleN.innerHTML = `Recul de l'observateur : <b>${tt}</b>. À cadrage constant,
-      allonger la focale, c'est reculer — et c'est ça qui aplatit l'éventail.`;
-  }
 
   if(CFG.ortho){
-    const hh = S_HALF;                       // même cadrage que la perspective
+    const hh = ORTHO_D*Math.tan(CFG.fov*Math.PI/360);   // même angle que la perspective, à distance de référence
     camO.left=-hh*camP.aspect; camO.right=hh*camP.aspect; camO.top=hh; camO.bottom=-hh;
     camO.quaternion.copy(camP.quaternion); camO.position.copy(camP.position);
     camO.updateProjectionMatrix(); camO.updateMatrixWorld();
     cam = camO;
   } else cam = camP;
 
-  // tant que l'utilisateur n'a pas fait tourner la vue, on la cadre
-  // perpendiculairement au plan vertical du Soleil : c'est la vue en coupe,
-  // celle où l'inclinaison des colonnes se lit directement.
-  if(ex.auto){ ex.th = -CFG.az*Math.PI/180; ex.ph = 0.14; }
-  const cp = Math.cos(ex.ph), D = 120000;      // recul fixe : seul le cadrage change
+  const cp = Math.cos(ex.ph), D = EX_D;        // recul fixe : seul le cadrage change
   camX.position.set(ex.tgt.x+Math.cos(ex.th)*cp*D,
                     ex.tgt.y+Math.sin(ex.ph)*D,
                     ex.tgt.z+Math.sin(ex.th)*cp*D);
@@ -1077,6 +1008,8 @@ function tick(){
   const axesWas = axesG.visible;
   axesG.visible = CFG.clouds;             // les axes y sont toujours tracés
   cloudMat.uniforms.uGhost.value = 1;
+  cloudMat.depthWrite = false;  // nuage fantôme : ne doit pas cacher les colonnes ici
+  occU.value = 0;
   fogK.value = 0.16;
   dfadeU.value = 0; gainU.value = 2.6;
   sky.position.copy(camX.position);
@@ -1091,6 +1024,8 @@ function tick(){
   renderer.render(scene, camX);
   renderer.setScissorTest(false);
   cloudMat.uniforms.uGhost.value = 0;
+  cloudMat.depthWrite = true;
+  occU.value = 1;
   fogK.value = 1;
   dfadeU.value = 1; gainU.value = mainGain;
   axesG.visible = axesWas;
