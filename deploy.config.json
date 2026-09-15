@@ -5,10 +5,27 @@
   "files_root": ".",
 
   "files": [
-    { "src": "rayons-crepusculaires.html", "dest": "pages/eventail/rayons-crepusculaires.html" },
-    { "src": "threejs.html",               "dest": "pages/eventail/threejs.html" },
-    { "src": "threejs2.html",              "dest": "pages/eventail/threejs2.html" },
-    { "src": "paysage-de-mer-avec-des-rayons-de-soleil-par-des-nuages-31077398.webp", "dest": "pages/eventail/paysage-de-mer-avec-des-rayons-de-soleil-par-des-nuages-31077398.webp" }
+    { "src": "rayons-crepusculaires.html",    "dest": "pages/eventail/rayons-crepusculaires.html" },
+    { "src": "css/explication.css",           "dest": "pages/eventail/css/explication.css" },
+    { "src": "css/rayons-crepusculaires.css", "dest": "pages/eventail/css/rayons-crepusculaires.css" },
+    { "src": "js/cameras.js",                 "dest": "pages/eventail/js/cameras.js" },
+    { "src": "js/config.js",                  "dest": "pages/eventail/js/config.js" },
+    { "src": "js/dom.js",                     "dest": "pages/eventail/js/dom.js" },
+    { "src": "js/entrees.js",                 "dest": "pages/eventail/js/entrees.js" },
+    { "src": "js/explication.js",             "dest": "pages/eventail/js/explication.js" },
+    { "src": "js/main.js",                    "dest": "pages/eventail/js/main.js" },
+    { "src": "js/overlay.js",                 "dest": "pages/eventail/js/overlay.js" },
+    { "src": "js/scene.js",                   "dest": "pages/eventail/js/scene.js" },
+    { "src": "js/soleil.js",                  "dest": "pages/eventail/js/soleil.js" },
+    { "src": "js/trous.js",                   "dest": "pages/eventail/js/trous.js" },
+    { "src": "js/ui.js",                      "dest": "pages/eventail/js/ui.js" },
+    { "src": "js/vue-cote.js",                "dest": "pages/eventail/js/vue-cote.js" },
+    { "src": "js/vue-exterieure.js",          "dest": "pages/eventail/js/vue-exterieure.js" },
+    { "src": "js/rendu/bruit.js",             "dest": "pages/eventail/js/rendu/bruit.js" },
+    { "src": "js/rendu/ciel.js",              "dest": "pages/eventail/js/rendu/ciel.js" },
+    { "src": "js/rendu/colonnes.js",          "dest": "pages/eventail/js/rendu/colonnes.js" },
+    { "src": "js/rendu/nuage.js",             "dest": "pages/eventail/js/rendu/nuage.js" },
+    { "src": "js/rendu/sol.js",               "dest": "pages/eventail/js/rendu/sol.js" }
   ],
 
   "_never_deploy": [

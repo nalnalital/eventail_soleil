@@ -1,0 +1,27 @@
+/* File: css/explication.css
+   Desc: Encart haut-droite « Explication de la perspective et de la focale » (pendant de la vue extérieure).
+   Version 1.0.0
+   Date: [September 15, 2026]
+   Copyright 2026 DNAvatar.org - Arnaud Maignan */
+
+#explic{position:fixed;right:14px;top:14px;width:404px;z-index:2;
+        background:var(--panel);backdrop-filter:blur(14px);
+        border:1px solid rgba(255,255,255,.22);border-radius:10px;
+        box-shadow:0 10px 34px rgba(0,0,0,.6);padding:0 12px 10px}
+#explic summary{cursor:pointer;list-style:none;padding:7px 0 5px;font-size:10px;letter-spacing:.4px;
+        text-transform:uppercase;color:#fff;user-select:none}
+#explic summary::-webkit-details-marker{display:none}
+#explic summary::before{content:"▸";display:inline-block;width:12px;color:var(--dim);transition:transform .15s}
+#explic[open] summary::before{transform:rotate(90deg)}
+#explic:not([open]){padding-bottom:0}
+#exSvg{display:block;width:100%;height:auto;border-radius:7px;background:rgba(0,0,0,.22)}
+#exSvg .ex-t{font:12px -apple-system,system-ui,sans-serif;fill:#9aa3b5}
+.ex-ctl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 10px;align-items:center;
+        font-size:12px;margin:6px 0 2px}
+.ex-ctl input[type=range]{margin:6px 0}
+.ex-met{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.ex-met>div{background:rgba(255,255,255,.05);border-radius:7px;padding:5px 8px;display:flex;flex-direction:column}
+.ex-met span{font-size:10.5px;color:var(--dim)}
+.ex-met b{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.ex-met .near{color:#EF9F27} .ex-met .far{color:#5DCAA5}
+@media (max-width:980px){#explic{top:calc(48% + 10px);right:10px;width:min(404px, calc(100% - 20px))}}
