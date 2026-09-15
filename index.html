@@ -4,10 +4,62 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rayons crépusculaires — pourquoi un éventail si le Soleil est à l'infini ?</title>
+<meta name="description" content="Le Soleil est à 150 millions de km : ses rayons devraient arriver parallèles. Pourtant on voit un éventail. Simulation 3D interactive (Three.js) qui montre que c'est un pur effet de perspective, pas une preuve que le Soleil est proche — réglez azimut, focale et distance pour le vérifier vous-même.">
+<meta name="author" content="Arnaud Maignan — DNAvatar.org">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://dnavatar.org/pages/eventail/index.html">
+
+<!-- Open Graph / réseaux sociaux -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rayons crépusculaires — pourquoi un éventail si le Soleil est à l'infini ?">
+<meta property="og:description" content="Simulation 3D interactive : pourquoi les rayons du Soleil, à 150 millions de km, dessinent un éventail au lieu d'arriver parallèles. Un effet de perspective, pas de proximité.">
+<meta property="og:image" content="https://dnavatar.org/pages/eventail/photo.jpg">
+<meta property="og:url" content="https://dnavatar.org/pages/eventail/index.html">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="DNAvatar.org">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rayons crépusculaires — pourquoi un éventail si le Soleil est à l'infini ?">
+<meta name="twitter:description" content="Simulation 3D interactive : pourquoi les rayons du Soleil dessinent un éventail alors qu'il est à 150 millions de km. Effet de perspective, pas de proximité.">
+<meta name="twitter:image" content="https://dnavatar.org/pages/eventail/photo.jpg">
+
 <link rel="icon" type="image/png" href="petit.png">
 <link rel="stylesheet" href="css/rayons-crepusculaires.css">
 <link rel="stylesheet" href="css/explication.css">
 <link rel="stylesheet" href="css/accueil.css">
+
+<!-- Données structurées : ce que lisent les moteurs de réponse IA (Google AI Overviews,
+     Perplexity, ChatGPT Search…) pour comprendre le sujet de la page sans l'interpréter. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Rayons crépusculaires : pourquoi un éventail si le Soleil est à l'infini ?",
+  "description": "Explication interactive et simulation 3D montrant que l'éventail des rayons crépusculaires est un effet de perspective (comme des rails de chemin de fer qui semblent converger), pas la preuve que le Soleil serait proche.",
+  "image": "https://dnavatar.org/pages/eventail/photo.jpg",
+  "inLanguage": "fr",
+  "url": "https://dnavatar.org/pages/eventail/index.html",
+  "author": { "@type": "Person", "name": "Arnaud Maignan" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DNAvatar.org",
+    "logo": { "@type": "ImageObject", "url": "https://dnavatar.org/pages/eventail/petit.png" }
+  },
+  "about": [
+    { "@type": "Thing", "name": "Rayons crépusculaires" },
+    { "@type": "Thing", "name": "Perspective (optique)" }
+  ],
+  "mainEntity": {
+    "@type": "Question",
+    "name": "Pourquoi voit-on un éventail de rayons du Soleil alors qu'il est à 150 millions de km ?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Les rayons du Soleil arrivent bien parallèles. L'éventail visible dans le ciel est un effet de perspective, identique à celui de rails de chemin de fer qui semblent se rejoindre au loin : ce qui compte est la distance à l'observateur, pas le zoom (la focale). En reculant, l'éventail se referme ; en zoomant seul, rien ne change."
+    }
+  }
+}
+</script>
 </head>
 <body>
 <canvas id="gl"></canvas>
