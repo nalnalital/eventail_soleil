@@ -4,12 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rayons crépusculaires — pourquoi un éventail si le Soleil est à l'infini ?</title>
+<link rel="icon" type="image/png" href="petit.png">
 <link rel="stylesheet" href="css/rayons-crepusculaires.css">
 <link rel="stylesheet" href="css/explication.css">
+<link rel="stylesheet" href="css/accueil.css">
 </head>
 <body>
 <canvas id="gl"></canvas>
 <canvas id="ov"></canvas>
+
+<div id="accueil">
+  <div class="carte" role="dialog" aria-modal="true" aria-labelledby="accueilQ">
+    <img src="photo.jpg" width="600" height="400" data-flux-tooltip="off" alt="Rayons de soleil en éventail sous des nuages, au-dessus de la mer">
+    <div class="pied">
+      <h1 id="accueilQ">Pourquoi voit-on un éventail de rayons du Soleil, même avec un Soleil à 150&nbsp;millions de km&nbsp;?</h1>
+      <button id="accueilOk">Explorer</button>
+    </div>
+  </div>
+</div>
 
 <div id="inset">
   <div class="cap">Vue extérieure — <b>Observateur et focale visibles</b></div>
@@ -113,6 +125,7 @@
 <script src="js/vue-cote.js"></script>
 <script src="js/explication.js"></script>
 <script src="js/overlay.js"></script>
+<script src="js/accueil.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

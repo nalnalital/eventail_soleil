@@ -1,0 +1,19 @@
+/* File: css/accueil.css
+   Desc: Popup d'arrivée (photo + question) et fond qui bloque la scène tant qu'elle est ouverte.
+   Version 1.0.0
+   Date: [September 15, 2026]
+   Copyright 2026 DNAvatar.org - Arnaud Maignan */
+
+#accueil{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;
+         padding:16px;background:rgba(5,7,12,.72);backdrop-filter:blur(3px);
+         transition:opacity .25s}
+#accueil.fin{opacity:0;pointer-events:none}
+#accueil .carte{width:min(600px,100%);background:var(--panel);border:1px solid rgba(255,255,255,.22);
+         border-radius:12px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.7)}
+#accueil img{display:block;width:100%;height:auto}
+#accueil .pied{display:flex;align-items:center;gap:14px;padding:14px 16px}
+#accueil h1{flex:1;margin:0;font-size:17px;line-height:1.35;font-weight:600}
+#accueil button{flex:none;font-size:13px;padding:8px 16px;background:var(--acc);color:#1a1d26;
+         border:none;font-weight:600}
+#accueil button:hover{background:#ffd77f}
+@media (max-width:520px){#accueil .pied{flex-direction:column;align-items:stretch}}

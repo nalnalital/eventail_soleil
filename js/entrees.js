@@ -1,12 +1,13 @@
 // File: js/entrees.js
 // Desc: Souris et molette : regard, déplacement de l'observateur, cadrage de la vue extérieure.
-// Version 1.0.3
+// Version 1.0.4
 // Date: [September 15, 2026]
 // Copyright 2026 DNAvatar.org - Arnaud Maignan
 // Licensed under Apache License 2.0 with Commons Clause.
 // Logs:
 // - Exterior zoom comment: cloud disk is CLOUD_R (32 km), not 125 km.
 // - Perspective explainer box (#explic) ignored like the panel.
+// - Arrival popup (#accueil) ignored too.
 
 /* ============================================================================
    ENTRÉES
@@ -15,7 +16,7 @@ let drag = null;
 const inInset = (x,y)=>{ const r=insetEl.getBoundingClientRect();
   return x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom; };
 addEventListener('pointerdown', e=>{
-  if(e.target.closest('#panel, #explic')) return;
+  if(e.target.closest('#panel, #explic, #accueil')) return;
   drag = {x:e.clientX, y:e.clientY, ins:inInset(e.clientX,e.clientY)};
   if(drag.ins) insetEl.classList.add('d');
 });
@@ -33,7 +34,7 @@ addEventListener('pointermove', e=>{
 });
 addEventListener('pointerup', ()=>{ drag=null; insetEl.classList.remove('d'); });
 addEventListener('wheel', e=>{
-  if(e.target.closest('#panel, #explic')) return;
+  if(e.target.closest('#panel, #explic, #accueil')) return;
   if(inInset(e.clientX,e.clientY))
     // borne haute : la couche nuageuse est un disque de CLOUD_R (cf. config.js)
     // — il faut pouvoir reculer assez pour le voir en entier, pas seulement

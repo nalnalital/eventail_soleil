@@ -7,6 +7,10 @@
   "files": [
     { "src": "index.html",                    "dest": "pages/eventail/index.html" },
     { "src": "js/interfaces.js",              "dest": "pages/eventail/js/interfaces.js" },
+    { "src": "js/accueil.js",                 "dest": "pages/eventail/js/accueil.js" },
+    { "src": "css/accueil.css",               "dest": "pages/eventail/css/accueil.css" },
+    { "src": "photo.jpg",                     "dest": "pages/eventail/photo.jpg" },
+    { "src": "petit.png",                     "dest": "pages/eventail/petit.png" },
     { "src": "css/explication.css",           "dest": "pages/eventail/css/explication.css" },
     { "src": "css/rayons-crepusculaires.css", "dest": "pages/eventail/css/rayons-crepusculaires.css" },
     { "src": "js/cameras.js",                 "dest": "pages/eventail/js/cameras.js" },
